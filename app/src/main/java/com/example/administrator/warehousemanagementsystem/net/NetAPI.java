@@ -63,10 +63,10 @@ public interface NetAPI {
 
     //同意/拒绝
     @GET("agreeReview.do")
-    Observable<BackData> agreeReview(@Query("userNo") Integer userNo, @Query("reviewNo") Integer reviewNo,@Query("objId") Integer objId, @Query("from") String app, @Query("token") String token);//提交同意审批
+    Observable<BackData> agreeReview(@Query("userNo") Integer userNo, @Query("reviewNo") Integer reviewNo, @Query("objId") Integer objId, @Query("from") String app, @Query("token") String token);//提交同意审批
 
     @GET("refuseReview.do")
-    Observable<BackData> refuseReview(@Query("userNo") Integer userNo, @Query("reviewNo") Integer reviewNo, @Query("reason") String reason,@Query("objId") Integer objId, @Query("from") String app, @Query("token") String token);//提交拒绝审批
+    Observable<BackData> refuseReview(@Query("userNo") Integer userNo, @Query("reviewNo") Integer reviewNo, @Query("reason") String reason, @Query("objId") Integer objId, @Query("from") String app, @Query("token") String token);//提交拒绝审批
 
     @GET("getReviewListWaitForMe.do")
     Observable<ReviewList> getReviewList(@Query("userNo") Integer userNo, @Query("page") int page, @Query("size") int size, @Query("from") String app, @Query("token") String token);//获取待审批订单
@@ -105,12 +105,12 @@ public interface NetAPI {
     Observable<BackData> changePass(@Query("id") int id, @Query("oldPass") String oldPass, @Query("newPass") String newPass, @Query("newPass2") String newPass2, @Query("from") String app, @Query("token") String token);//更改密码
 
     @GET("getStockOutRecord.do")
-    Observable<StockOutRecordBean> getStockOutRecord(@Query("beginDate") String beginDate, @Query("endDate") String endDate, @Query("deptNo") int deptNo);//根据deptNo获取历史申领记录单饼状图
+    Observable<StockOutRecordBean> getStockOutRecord(@Query("beginDate") String beginDate, @Query("endDate") String endDate, @Query("deptNo") int deptNo, @Query("from") String app, @Query("token") String token);//根据deptNo获取历史申领记录单饼状图
 
     @GET("countStockOutRecord.do")
-    Observable<CountStockOutRecordBean> getCountStockOutRecord(@Query("beginDate") String beginDate, @Query("endDate") String endDate, @Query("deptNo") int deptNo);//根据deptNo获取柱状图
+    Observable<CountStockOutRecordBean> getCountStockOutRecord(@Query("beginDate") String beginDate, @Query("endDate") String endDate, @Query("deptNo") int deptNo, @Query("from") String app, @Query("token") String token);//根据deptNo获取柱状图
 
 
     @GET("getDeptListBy.do")
-    Observable<DeptListBean> getDeptListBy(@Query("deptType") String deptType, @Query("page") String page, @Query("size") String size);//获取全部收费站
+    Observable<DeptListBean> getDeptListBy(@Query("deptType") String deptType, @Query("page") String page, @Query("size") String size, @Query("from") String app, @Query("token") String token);//获取全部收费站
 }

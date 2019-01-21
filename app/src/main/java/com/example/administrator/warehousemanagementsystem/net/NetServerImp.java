@@ -57,7 +57,7 @@ import rx.schedulers.Schedulers;
 public class NetServerImp {
     private Retrofit retrofit;
     private NetAPI netAPI;
-    private static final String BASE_URL = "http://192.168.0.88:8080/";  //10.101.80.119  10.101.208.119 120  192.168.254.251 192.168.0.88
+    private static final String BASE_URL = "http://192.168.254.251:8080/";  //10.101.80.119  10.101.208.119 120  192.168.254.251 192.168.0.88
     MyApp myApp;
     private static String APP = "app";
     String msg = "";
@@ -857,7 +857,7 @@ public class NetServerImp {
      * 收费站查看自己的领用情况生成饼状图
      */
     public void getStockOutRecord(String beginDate, String endDate, MyDialog myDialog) {
-        netAPI.getStockOutRecord(beginDate, endDate, myApp.getUser().getDeptNo()).subscribeOn(Schedulers.io())//IO线程加载数据
+        netAPI.getStockOutRecord(beginDate, endDate, myApp.getUser().getDeptNo(), APP, myApp.getToken()).subscribeOn(Schedulers.io())//IO线程加载数据
                 .observeOn(AndroidSchedulers.mainThread())//主线程显示数据
                 .subscribe(new Subscriber<StockOutRecordBean>() {
                     @Override
@@ -898,7 +898,7 @@ public class NetServerImp {
      */
     public void getCountStockOutRecord(String beginDate, String endDate, Integer deptNo, MyDialog myDialog) {
         System.out.println("beginDate:" + beginDate);
-        netAPI.getCountStockOutRecord(beginDate, endDate, deptNo).subscribeOn(Schedulers.io())//IO线程加载数据
+        netAPI.getCountStockOutRecord(beginDate, endDate, deptNo, APP, myApp.getToken()).subscribeOn(Schedulers.io())//IO线程加载数据
                 .observeOn(AndroidSchedulers.mainThread())//主线程显示数据
                 .subscribe(new Subscriber<CountStockOutRecordBean>() {
                     @Override
@@ -936,7 +936,7 @@ public class NetServerImp {
      * 收费站列表
      */
     public void getDeptListBy(MyDialog myDialog) {
-        netAPI.getDeptListBy("200", "1", "1000").subscribeOn(Schedulers.io())//IO线程加载数据
+        netAPI.getDeptListBy("200", "1", "1000", APP, myApp.getToken()).subscribeOn(Schedulers.io())//IO线程加载数据
                 .observeOn(AndroidSchedulers.mainThread())//主线程显示数据
                 .subscribe(new Subscriber<DeptListBean>() {
                     @Override
