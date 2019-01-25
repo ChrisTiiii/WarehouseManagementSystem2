@@ -147,7 +147,8 @@ public class SPDetailActivity extends AppCompatActivity {
             case 300:
                 if (myApp.getRoot() != -1)
                     if (myApp.getRoot() == 100) {
-                        llBottom.setVisibility(View.GONE);
+                        layoutButton.setVisibility(View.GONE);
+                        layoutRemove.setVisibility(View.VISIBLE);
                     } else {
                         layoutButton.setVisibility(View.VISIBLE);
                         layoutRemove.setVisibility(View.GONE);
@@ -156,7 +157,8 @@ public class SPDetailActivity extends AppCompatActivity {
             case 310:
                 if (myApp.getRoot() != -1)
                     if (myApp.getRoot() == 100) {
-                        llBottom.setVisibility(View.GONE);
+                        layoutButton.setVisibility(View.GONE);
+                        layoutRemove.setVisibility(View.VISIBLE);
                     } else {
                         layoutButton.setVisibility(View.VISIBLE);
                         layoutRemove.setVisibility(View.GONE);
@@ -165,20 +167,24 @@ public class SPDetailActivity extends AppCompatActivity {
             case 320:
                 if (myApp.getRoot() != -1)
                     if (myApp.getRoot() == 100) {
-                        llBottom.setVisibility(View.GONE);
+                        layoutButton.setVisibility(View.GONE);
+                        layoutRemove.setVisibility(View.VISIBLE);
                     } else {
                         layoutButton.setVisibility(View.VISIBLE);
                         layoutRemove.setVisibility(View.GONE);
                     }
                 break;
             case 2:
-                llBottom.setVisibility(View.GONE);
+                layoutButton.setVisibility(View.GONE);
+                layoutRemove.setVisibility(View.VISIBLE);
                 break;
             case 3:
-                llBottom.setVisibility(View.GONE);
+                layoutButton.setVisibility(View.GONE);
+                layoutRemove.setVisibility(View.VISIBLE);
                 break;
             case 4:
-                llBottom.setVisibility(View.GONE);
+                layoutButton.setVisibility(View.GONE);
+                layoutRemove.setVisibility(View.VISIBLE);
                 break;
 
         }
@@ -242,21 +248,87 @@ public class SPDetailActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.revocation:
-                Toast.makeText(myApp, "您当前无法撤销", Toast.LENGTH_SHORT).show();
-//                builder = new AlertDialog.Builder(SPDetailActivity.this);
-//                builder.setTitle("确定要撤销吗？");
-//                builder.setMessage("同意撤销本次申请请按确认键");
-//                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        finish();
-//                    }
-//                });
-//                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                    }
-//                }).show();
+                switch (detailType) {
+                    case 2://撤销申请单
+                        builder = new AlertDialog.Builder(SPDetailActivity.this);
+                        builder.setTitle("确定撤销吗?");
+                        builder.setMessage("确认撤销本次申请请按确定键");
+                        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (applyBean.getReviewList() != null) {
+                                    int review = -1;
+                                    for (ApplyBean.DataBean.ReviewListBean dataBean : applyBean.getReviewList()) {
+                                        if (myApp.getUser().getId() == applyBean.getUserNo()) {
+                                            review = dataBean.getId();
+                                        }
+                                    }
+                                    System.out.println("review:" + review);
+                                    if (review != -1)
+                                        netServerImp.removeApply(applyBean.getId());
+                                }
+                            }
+                        });
+                        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }).show();
+                        break;
+                    case 3://撤销采购单
+                        builder = new AlertDialog.Builder(SPDetailActivity.this);
+                        builder.setTitle("确定撤销吗?");
+                        builder.setMessage("确认撤销本次采购请按确定键");
+                        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (purchaseBean.getReviewList() != null) {
+                                    int review = -1;
+                                    for (PurchaseBean.DataBean.ReviewListBean dataBean : purchaseBean.getReviewList()) {
+                                        if (myApp.getUser().getId() == purchaseBean.getUserNo())
+                                            review = dataBean.getId();
+                                    }
+                                    System.out.println("review:" + review);
+                                    if (review != -1)
+                                        netServerImp.removePurchase(purchaseBean.getId());
+                                }
+                            }
+                        });
+                        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }).show();
+                        break;
+                    case 4://撤销预算单
+                        builder = new AlertDialog.Builder(SPDetailActivity.this);
+                        builder.setTitle("确定撤销吗?");
+                        builder.setMessage("确认撤销本次预算请按确定键");
+                        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (budgetBean.getReviewList() != null) {
+                                    int review = -1;
+                                    for (BudgetBean.DataBean.ReviewListBean dataBean : budgetBean.getReviewList()) {
+                                        if (myApp.getUser().getId() == budgetBean.getUserNo())
+                                            review = dataBean.getId();
+                                    }
+                                    System.out.println("review:" + review);
+                                    if (review != -1)
+                                        netServerImp.removeBudget(budgetBean.getId());
+                                }
+                            }
+                        });
+                        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }).show();
+                        break;
+                }
                 break;
             case R.id.agree:
                 switch (detailType) {

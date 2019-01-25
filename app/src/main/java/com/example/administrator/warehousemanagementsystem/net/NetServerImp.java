@@ -57,7 +57,7 @@ import rx.schedulers.Schedulers;
 public class NetServerImp {
     private Retrofit retrofit;
     private NetAPI netAPI;
-    private static final String BASE_URL = "http://192.168.254.251:8080/";  //10.101.80.119  10.101.208.119 120  192.168.254.251 192.168.0.88
+    private static final String BASE_URL = "http://192.168.0.88:8080/";  //10.101.80.119  10.101.208.119 120  192.168.254.251 192.168.0.88
     MyApp myApp;
     private static String APP = "app";
     String msg = "";
@@ -559,6 +559,93 @@ public class NetServerImp {
 
     }
 
+
+    /**
+     * 撤销申请单
+     */
+    public void removeApply(Integer id) {
+        netAPI.removeApply(id, APP, myApp.getToken()).subscribeOn(Schedulers.io())//IO线程加载数据
+                .observeOn(AndroidSchedulers.mainThread())//主线程显示数据
+                .subscribe(new Subscriber<BackData>() {
+                    @Override
+                    public void onCompleted() {
+                        System.out.println("removeApply完成");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.println("error:" + e.getMessage());
+                        Toast.makeText(myApp, "请检查你的网络是否连接正常", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(BackData s) {
+                        System.out.println("agree:" + s.getResult());
+                        if (s.getResult().equals("ok")) {
+                            EventBus.getDefault().post(new MessageEvent(myApp.COMMIT_APPLY, "success"));
+                        }
+                    }
+                });
+
+    }
+
+    /**
+     * 撤销采购单
+     */
+    public void removePurchase(Integer id) {
+        netAPI.removePurchase(id, APP, myApp.getToken()).subscribeOn(Schedulers.io())//IO线程加载数据
+                .observeOn(AndroidSchedulers.mainThread())//主线程显示数据
+                .subscribe(new Subscriber<BackData>() {
+                    @Override
+                    public void onCompleted() {
+                        System.out.println("removePurchase完成");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.println("error:" + e.getMessage());
+                        Toast.makeText(myApp, "请检查你的网络是否连接正常", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(BackData s) {
+                        System.out.println("agree:" + s.getResult());
+                        if (s.getResult().equals("ok")) {
+                            EventBus.getDefault().post(new MessageEvent(myApp.COMMIT_APPLY, "success"));
+                        }
+                    }
+                });
+
+    }
+
+    /**
+     * 撤销预算单
+     */
+    public void removeBudget(Integer id) {
+        netAPI.removeBudget(id, APP, myApp.getToken()).subscribeOn(Schedulers.io())//IO线程加载数据
+                .observeOn(AndroidSchedulers.mainThread())//主线程显示数据
+                .subscribe(new Subscriber<BackData>() {
+                    @Override
+                    public void onCompleted() {
+                        System.out.println("removeBudget完成");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.println("error:" + e.getMessage());
+                        Toast.makeText(myApp, "请检查你的网络是否连接正常", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(BackData s) {
+                        System.out.println("agree:" + s.getResult());
+                        if (s.getResult().equals("ok")) {
+                            EventBus.getDefault().post(new MessageEvent(myApp.COMMIT_APPLY, "success"));
+                        }
+                    }
+                });
+
+    }
 
     /**
      * 拒绝请求

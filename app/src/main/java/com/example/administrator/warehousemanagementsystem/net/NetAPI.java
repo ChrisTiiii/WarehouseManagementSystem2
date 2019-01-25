@@ -68,6 +68,16 @@ public interface NetAPI {
     @GET("refuseReview.do")
     Observable<BackData> refuseReview(@Query("userNo") Integer userNo, @Query("reviewNo") Integer reviewNo, @Query("reason") String reason, @Query("objId") Integer objId, @Query("from") String app, @Query("token") String token);//提交拒绝审批
 
+
+    @GET("updateApply.do")
+    Observable<BackData> removeApply(@Query("id") Integer id, @Query("from") String app, @Query("token") String token);//撤销申领单
+
+    @GET("updatePurchase.do")
+    Observable<BackData> removePurchase(@Query("id") Integer id, @Query("from") String app, @Query("token") String token);//撤销采购单
+
+    @GET("updateBudget.do")
+    Observable<BackData> removeBudget(@Query("id") Integer id, @Query("from") String app, @Query("token") String token);//撤销预算单
+
     @GET("getReviewListWaitForMe.do")
     Observable<ReviewList> getReviewList(@Query("userNo") Integer userNo, @Query("page") int page, @Query("size") int size, @Query("from") String app, @Query("token") String token);//获取待审批订单
 

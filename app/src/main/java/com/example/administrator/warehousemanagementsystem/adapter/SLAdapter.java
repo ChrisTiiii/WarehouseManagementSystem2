@@ -99,7 +99,7 @@ public class SLAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     //删除物品信息
     public void deleteData(int position) {
-        goodsList.remove(position);
+        goodsList.remove(position - 1);
         if (position != 0) {
             uiList.remove(position);
         } else {
@@ -120,7 +120,6 @@ public class SLAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             else Toast.makeText(context, "审批人最多选五个", Toast.LENGTH_SHORT).show();
         }
         notifyDataSetChanged();
-
     }
 
     //删除leader
@@ -308,10 +307,22 @@ public class SLAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     }
 
+    /**
+     * 设置步数
+     *
+     * @return
+     */
     public List<String> stepLeader() {
         List<String> list = new ArrayList<>();
         for (MyLeader leader : leaderList) {
-            list.add(leader.getName());
+            String name = leader.getName();
+            if (name.indexOf("-") != -1)
+                name = name.substring(0, name.indexOf("-"));
+            else if (name.length() > 4) {
+                name = name.substring(0, 4);
+                name += "..";
+            }
+            list.add(name);
         }
         return list;
     }

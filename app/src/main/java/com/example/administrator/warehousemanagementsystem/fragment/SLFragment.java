@@ -181,6 +181,7 @@ public class SLFragment extends Fragment {
                     for (Map<String, Object> map : messageEvent.getMapList()) {
                         String code = String.valueOf(map.get("code"));
                         String name = String.valueOf(map.get("name"));
+
                         MyLeader leader = new MyLeader(code, name);
                         spAdapter.achieveLeader(leader);
                     }
